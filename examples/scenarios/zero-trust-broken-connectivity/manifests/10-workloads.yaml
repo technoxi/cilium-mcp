@@ -1,0 +1,191 @@
+# storefront namespace
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-frontend
+  namespace: storefront
+  labels:
+    app: web-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-frontend
+  template:
+    metadata:
+      labels:
+        app: web-frontend
+    spec:
+      containers:
+      - name: curl
+        image: curlimages/curl:8.7.1
+        command: ["sleep", "infinity"]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog-api
+  namespace: storefront
+  labels:
+    app: catalog-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: catalog-api
+  template:
+    metadata:
+      labels:
+        app: catalog-api
+    spec:
+      containers:
+      - name: app
+        image: hashicorp/http-echo:1.0
+        args: ["-text=catalog-ok", "-listen=:8080"]
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: catalog-api
+  namespace: storefront
+spec:
+  selector:
+    app: catalog-api
+  ports:
+  - port: 8080
+    targetPort: 8080
+# orders namespace
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orders-api
+  namespace: orders
+  labels:
+    app: orders-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orders-api
+  template:
+    metadata:
+      labels:
+        app: orders-api
+    spec:
+      containers:
+      - name: app
+        image: hashicorp/http-echo:1.0
+        args: ["-text=orders-ok", "-listen=:8080"]
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orders-api
+  namespace: orders
+spec:
+  selector:
+    app: orders-api
+  ports:
+  - port: 8080
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orders-worker
+  namespace: orders
+  labels:
+    app: orders-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orders-worker
+  template:
+    metadata:
+      labels:
+        app: orders-worker
+    spec:
+      containers:
+      - name: curl
+        image: curlimages/curl:8.7.1
+        command: ["sleep", "infinity"]
+# infra namespace
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service
+  namespace: infra
+  labels:
+    app: auth-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-service
+  template:
+    metadata:
+      labels:
+        app: auth-service
+    spec:
+      containers:
+      - name: app
+        image: hashicorp/http-echo:1.0
+        args: ["-text=auth-ok", "-listen=:8080"]
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service
+  namespace: infra
+spec:
+  selector:
+    app: auth-service
+  ports:
+  - port: 8080
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-stub
+  namespace: infra
+  labels:
+    app: postgres-stub
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-stub
+  template:
+    metadata:
+      labels:
+        app: postgres-stub
+    spec:
+      containers:
+      - name: app
+        image: hashicorp/http-echo:1.0
+        args: ["-text=postgres-ok", "-listen=:5432"]
+        ports:
+        - containerPort: 5432
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-stub
+  namespace: infra
+spec:
+  selector:
+    app: postgres-stub
+  ports:
+  - port: 5432
+    targetPort: 5432

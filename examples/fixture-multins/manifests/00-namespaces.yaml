@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: customer
+  labels:
+    purpose: cilium-mcp-multins
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: payments
+  labels:
+    purpose: cilium-mcp-multins
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: shared
+  labels:
+    purpose: cilium-mcp-multins

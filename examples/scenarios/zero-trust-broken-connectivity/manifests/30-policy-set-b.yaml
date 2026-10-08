@@ -1,0 +1,25 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: policy-set-b
+  namespace: storefront
+spec:
+  endpointSelector:
+    matchLabels:
+      app: web-frontend
+  egressDeny:
+  - toEntities:
+    - world
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: policy-set-b
+  namespace: orders
+spec:
+  endpointSelector:
+    matchLabels:
+      app: orders-worker
+  egressDeny:
+  - toEntities:
+    - world

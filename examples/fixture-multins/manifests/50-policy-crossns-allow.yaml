@@ -1,0 +1,26 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-customer-portal-to-payments-api
+  namespace: payments
+spec:
+  endpointSelector:
+    matchLabels:
+      app: payments-api
+  ingress:
+  - fromEndpoints:
+    - matchLabels:
+        app: customer-portal
+        io.kubernetes.pod.namespace: customer
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+  - fromEndpoints:
+    - matchLabels:
+        app: payments-worker
+        io.kubernetes.pod.namespace: payments
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP

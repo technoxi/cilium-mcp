@@ -1,0 +1,12 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: deny-world-egress
+  namespace: saas-lab
+spec:
+  endpointSelector:
+    matchLabels:
+      app: payment-worker
+  egressDeny:
+  - toEntities:
+    - world

@@ -1,0 +1,41 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: customer-default
+  namespace: customer
+spec:
+  endpointSelector: {}
+  ingress:
+  - fromEntities:
+    - cluster
+  egress:
+  - toEntities:
+    - cluster
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: payments-default
+  namespace: payments
+spec:
+  endpointSelector: {}
+  ingress:
+  - fromEntities:
+    - cluster
+  egress:
+  - toEntities:
+    - cluster
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: shared-default
+  namespace: shared
+spec:
+  endpointSelector: {}
+  ingress:
+  - fromEntities:
+    - cluster
+  egress:
+  - toEntities:
+    - cluster

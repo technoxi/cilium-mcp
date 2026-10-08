@@ -1,0 +1,14 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: deny-customer-portal-to-payments-api
+  namespace: payments
+spec:
+  endpointSelector:
+    matchLabels:
+      app: payments-api
+  ingressDeny:
+  - fromEndpoints:
+    - matchLabels:
+        app: customer-portal
+        io.kubernetes.pod.namespace: customer

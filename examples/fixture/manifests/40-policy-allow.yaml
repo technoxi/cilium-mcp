@@ -1,0 +1,21 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-frontend-and-client-to-api
+  namespace: cilium-mcp-lab
+spec:
+  endpointSelector:
+    matchLabels:
+      app: api
+  ingress:
+  - fromEndpoints:
+    - matchLabels:
+        app: frontend
+  - fromEndpoints:
+    - matchLabels:
+        app: test-client
+  - fromEntities:
+    - cluster
+  egress:
+  - toEntities:
+    - cluster

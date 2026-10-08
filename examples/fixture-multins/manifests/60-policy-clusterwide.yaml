@@ -1,0 +1,12 @@
+apiVersion: cilium.io/v2
+kind: CiliumClusterwideNetworkPolicy
+metadata:
+  name: audit-cross-namespace-http
+spec:
+  endpointSelector: {}
+  ingress:
+  - fromEntities:
+    - cluster
+  egress:
+  - toEntities:
+    - cluster

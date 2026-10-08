@@ -1,0 +1,12 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: deny-api-ingress
+  namespace: cilium-mcp-lab
+spec:
+  endpointSelector:
+    matchLabels:
+      app: api
+  ingressDeny:
+  - fromEndpoints:
+    - {}

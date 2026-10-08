@@ -1,0 +1,54 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: policy-set-a
+  namespace: storefront
+spec:
+  endpointSelector: {}
+  ingressDeny:
+  - fromEntities:
+    - cluster
+    - world
+    - host
+  egressDeny:
+  - toEntities:
+    - cluster
+    - world
+    - host
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: policy-set-a
+  namespace: orders
+spec:
+  endpointSelector: {}
+  ingressDeny:
+  - fromEntities:
+    - cluster
+    - world
+    - host
+  egressDeny:
+  - toEntities:
+    - cluster
+    - world
+    - host
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: policy-set-a
+  namespace: infra
+spec:
+  endpointSelector: {}
+  ingressDeny:
+  - fromEntities:
+    - cluster
+    - world
+    - host
+  egressDeny:
+  - toEntities:
+    - cluster
+    - world
+    - host
